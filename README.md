@@ -19,35 +19,36 @@ Esta es la forma más sencilla de levantar todo el sistema (Base de datos, Backe
    docker-compose up -d
 ```
 
-    Espera unos segundos a que todos los servicios arranquen.
+ Espera unos segundos a que todos los servicios arranquen.
 
-    Importar Base de Datos:
+ Importar Base de Datos:
 
-        Conéctate a tu gestor de BD favorito (DBeaver, Workbench) usando:
+  Conéctate a tu gestor de BD favorito (DBeaver, Workbench) usando:
 
-            Host: localhost
+   Host: localhost
 
-            Puerto: 3306
+   Puerto: 3306
 
-            User/Pass: lovesync / Asd123??
+   User/Pass: lovesync / Asd123??
 
-        Ejecuta el script database.sql ubicado en la carpeta mysql/.
+  Ejecuta el script database.sql ubicado en la carpeta mysql/.
 
 Accesos
 
-    Frontend (Web): http://localhost:8080
+ Frontend (Web): http://localhost:8080
 
-    Backend (API Node): http://localhost:3001
+ Backend (API Node): http://localhost:3001
 
-    Algoritmo (API Python): http://localhost:8000/docs
+ Algoritmo (API Python): http://localhost:8000/docs
 
-    Base de Datos: Puerto 3306
+ Base de Datos: Puerto 3306
 
 📂 2. Estructura del Proyecto
 
 El código se organiza en microservicios contenerizados:
 Plaintext
 
+```
 lovesync/
 │
 ├── docker-compose.yml       # Orquestador de todos los servicios
@@ -68,6 +69,7 @@ lovesync/
 │
 └── mysql/                   # Persistencia de Datos
     └── database.sql         # Script inicial de la BD
+```
 
 🛠️ 3. Ejecución Manual (Modo Legacy / Desarrollo Local)
 
@@ -76,65 +78,62 @@ Si prefieres ejecutar cada servicio por separado en tu máquina (sin Docker), si
 ⚠️ Nota Importante: Si ejecutas localmente, debes cambiar la configuración de conexión a la base de datos en db.js y ml_api.py para que el host sea localhost en lugar de mysql.
 Requisitos Previos
 
-    Node.js y npm
+ Node.js y npm
 
-    Miniconda (para el entorno de Python)
+ Miniconda (para el entorno de Python)
 
-    MySQL Server corriendo localmente
+ MySQL Server corriendo localmente
 
 A. Base de Datos (MySQL)
 
-    Asegúrate de tener MySQL corriendo.
-
-    Crea una base de datos llamada lovesync.
-
-    Importa el archivo mysql/database.sql.
+ - Asegúrate de tener MySQL corriendo.
+ - Crea una base de datos llamada lovesync.
+ - Importa el archivo mysql/database.sql.
 
 B. Backend (Node.js)
 
-    Accede a la carpeta: cd backend
-
-    Instala dependencias: npm install
-
-    Inicia el servidor: node server.js
+ - Accede a la carpeta: cd backend
+ - Instala dependencias: `npm install`
+ - Inicia el servidor: `node server.js`
 
 C. Backend de Machine Learning (Python + FastAPI)
 
-Se requiere Miniconda para evitar conflictos.
-
-    Crea/Activa el entorno (basado en requirementsConda.md):
-    Bash
-
+*Se requiere Miniconda para evitar conflictos.*
+- Crea/Activa el entorno (basado en requirementsConda.md):
+ 
+ ```Bash
 conda activate gpu_lab
+```
 
-Accede a la carpeta: cd backend
+- Accede a la carpeta: 
 
-Instala las dependencias si no lo has hecho:
-Bash
+```bash
+cd backend
+```
 
+- Instala las dependencias si no lo has hecho:
+
+```bash
 pip install -r requirements.txt
+```
 
-Ejecuta la API:
-Bash
+- Ejecuta la API:
 
+```bash
     uvicorn ml_api:app --reload --port 8000
+```
 
 D. Frontend (React)
 
-    Accede a la carpeta: cd frontend
-
-    Instala dependencias: npm install
-
-    Inicia en modo desarrollo: npm run dev
+ - Accede a la carpeta: cd frontend
+ - Instala dependencias: npm install
+ - Inicia en modo desarrollo: `npm run dev`
 
 📋 4. Orden Recomendado de Ejecución
 
 Si no usas Docker, el orden estricto para evitar errores de conexión es:
-
-    MySQL (Debe estar listo para recibir conexiones).
-
-    Backend Node.js (Conecta con MySQL).
-
-    Backend ML (Python) (Conecta con MySQL y carga modelos).
-
-    Frontend (Interfaz para el usuario).
+ 1. MySQL (Debe estar listo para recibir conexiones).
+ 2. Backend Node.js (Conecta con MySQL). 
+ 3. Backend ML (Python) (Conecta con MySQL y carga modelos).
+ 4. Frontend (Interfaz para el usuario).
+ 
