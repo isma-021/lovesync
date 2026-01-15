@@ -45,7 +45,7 @@ services:
       - "8000:8000"
     environment:
       - DB_HOST=mysql
-      - DB_USER=root   # Ojo: tu script python usa root en el ejemplo original
+      - DB_USER=root
       - DB_PASSWORD=Asd123??
       - DB_NAME=lovesync
     depends_on:
