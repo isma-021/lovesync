@@ -1,0 +1,74 @@
+#version: '3.8'
+
+services:
+  mysql:
+    hostname: "mysql"
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Asd123??
+      MYSQL_DATABASE: lovesync
+      MYSQL_USER: lovesync
+      MYSQL_PASSWORD: Asd123??
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/database.sql:/docker-entrypoint-initdb.d/database.sql
+      - ./mysql/mysql-data:/var/lib/mysql
+  # 1. Base de Datos
+    networks:
+      - lovesync-net
+  # 2. Backend (Node.js)
+  backend:
+    image: isma021/lovesync-backend:v1
+    container_name: lovesync-backend
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=lovesync
+      - DB_PASSWORD=Asd123??
+      - DB_NAME=lovesync
+    depends_on:
+      - mysql
+    networks:
+      - lovesync-net
+
+  # 3. Algoritmo (Python FastAPI)
+  algorithm:
+    image: isma021/lovesync-algorithm:v1
+    container_name: lovesync-algorithm
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root   # Ojo: tu script python usa root en el ejemplo original
+      - DB_PASSWORD=Asd123??
+      - DB_NAME=lovesync
+    depends_on:
+      - mysql
+    networks:
+      - lovesync-net
+
+  # 4. Frontend (React/Vite)
+  frontend:
+    image: isma021/lovesync-frontend:v1
+    container_name: lovesync-frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    networks:
+      - lovesync-net
+
+# Definición de la red compartida
+networks:
+  lovesync-net:
+    driver: bridge
+
+# Persistencia de datos
+volumes:
+  mysql_data:

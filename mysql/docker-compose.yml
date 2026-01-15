@@ -1,0 +1,19 @@
+services:
+  mysql:
+    hostname: "mysql"
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Asd123??
+      MYSQL_DATABASE: lovesync
+      MYSQL_USER: lovesync
+      MYSQL_PASSWORD: Asd123??
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

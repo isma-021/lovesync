@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* LoveSync Monochrome Palette */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 13%;
+    
+    --surface-100: 0 0% 100%;
+    --surface-200: 240 20% 98%;
+    --surface-300: 220 14% 96%;
+    
+    --text-primary: 220 13% 13%;
+    --text-secondary: 220 9% 46%;
+    --text-tertiary: 220 9% 64%;
+    
+    --card: 240 20% 98%;
+    --card-foreground: 220 13% 13%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 13%;
+    
+    --primary: 215 14% 17%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 13%;
+    
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    
+    --accent: 160 60% 45%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 14% 96%;
+    --border-subtle: 0 0% 0% / 0.06;
+    --input: 220 14% 96%;
+    --ring: 220 13% 13%;
+    
+    --radius: 1rem;
+    
+    /* Custom LoveSync tokens */
+    --signal-green: 160 60% 45%;
+    --charcoal: 215 14% 17%;
+    
+    /* Shadows */
+    --shadow-glow: 0px 20px 60px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0px 24px 80px rgba(0, 0, 0, 0.12);
+    --shadow-subtle: 0px 4px 24px rgba(0, 0, 0, 0.04);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.06);
+  }
+
+  .dark {
+    --background: 220 13% 8%;
+    --foreground: 0 0% 98%;
+    
+    --surface-100: 220 13% 8%;
+    --surface-200: 220 13% 11%;
+    --surface-300: 220 13% 15%;
+    
+    --text-primary: 0 0% 98%;
+    --text-secondary: 220 9% 65%;
+    --text-tertiary: 220 9% 50%;
+    
+    --card: 220 13% 11%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 220 13% 11%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 0 0% 98%;
+    --primary-foreground: 220 13% 13%;
+    
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 220 13% 15%;
+    --muted-foreground: 220 9% 65%;
+    
+    --accent: 160 60% 45%;
+    --accent-foreground: 0 0% 100%;
+    
+    --border: 220 13% 15%;
+    --border-subtle: 255 255 255 / 0.06;
+    --input: 220 13% 15%;
+    --ring: 0 0% 98%;
+    
+    --glass-bg: rgba(17, 24, 39, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.06);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Background grid pattern */
+  .bg-grid {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  }
+  
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+  
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Glassmorphism */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  /* Hero query box */
+  .query-box {
+    background: hsl(var(--surface-100));
+    box-shadow: var(--shadow-glow);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .query-box:hover {
+    box-shadow: var(--shadow-hover);
+  }
+  
+  /* Bento card */
+  .bento-card {
+    @apply bg-card border border-border rounded-3xl p-6 relative overflow-hidden;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .bento-card:hover::before {
+    opacity: 1;
+  }
+  
+  /* Ticker animation */
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .ticker-animate {
+    animation: ticker 30s linear infinite;
+  }
+  
+  /* Fade in animation */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  
+  /* Stagger delays */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+  
+  /* Button scale effect */
+  .btn-scale {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .btn-scale:hover {
+    transform: scale(0.98);
+  }
+  
+  .btn-scale:active {
+    transform: scale(0.96);
+  }
+  
+  /* Micro labels */
+  .micro-label {
+    @apply text-[11px] font-medium uppercase tracking-widest text-muted-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .tracking-tight {
+    letter-spacing: -0.02em;
+  }
+  
+  .tracking-wide {
+    letter-spacing: 0.05em;
+  }
+}
